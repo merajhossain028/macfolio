@@ -101,12 +101,12 @@ const blogPosts = [
 
 const techStack = [
   {
-    category: "Frontend",
-    items: ["React.js", "Next.js", "TypeScript"],
+    category: "Mobile",
+    items: ["Flutter", "Kotlin"],
   },
   {
-    category: "Mobile",
-    items: ["React Native", "Expo"],
+    category: "Frontend",
+    items: ["React.js", "Next.js", "TypeScript"],
   },
   {
     category: "Styling",
@@ -114,15 +114,27 @@ const techStack = [
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Hono"],
+    items: ["Fast API", "NodeJs", "Express"],
   },
   {
     category: "Database",
-    items: ["MongoDB", "PostgreSQL"],
+    items: ["Firebase", "Supabase", "MongoDB", "PostgreSQL"],
   },
   {
     category: "Dev Tools",
-    items: ["Git", "GitHub", "Docker"],
+    items: ["Git", "GitHub", "BitBucket", "Docker"],
+  },
+  {
+    category: "Cloud",
+    items: ["AWS", "Google Cloud"],
+  },
+  {
+    category: "Project Management Methodologies",
+    items: ["Agile", "Scrum", "Kanban", "Waterfall"],
+  },
+  {
+    category: "Project Management Tools",
+    items: ["Jira", "Trello", "Slack", "Notion", "ClickUp"],
   },
 ];
 
@@ -205,14 +217,14 @@ const gallery = [
 ];
 
 export {
-  navLinks,
-  navIcons,
-  dockApps,
-  blogPosts,
-  techStack,
-  socials,
-  photosLinks,
-  gallery,
+    blogPosts,
+    dockApps,
+    gallery,
+    navIcons,
+    navLinks,
+    photosLinks,
+    socials,
+    techStack
 };
 
 const WORK_LOCATION = {
