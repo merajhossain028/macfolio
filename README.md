@@ -1,16 +1,78 @@
-# React + Vite
+---
+# macfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern portfolio web app inspired by macOS, built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **macOS-style UI:** Dock, windows, and navigation bar for a familiar desktop experience.
+- **Animated Dock:** Smooth GSAP-powered dock icon animations.
+- **Windowed Apps:** Portfolio, Resume, Contact, Gallery, Terminal, and more.
+- **Draggable Folders:** Projects can be dragged and opened like macOS Finder.
+- **PDF Resume Viewer:** View and download your resume directly in-app.
+- **Social Links:** Connect with your social media profiles.
+- **Responsive Design:** Works beautifully on desktop and mobile.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- Tailwind CSS
+- GSAP (for animations)
+- react-pdf (for PDF viewing)
+- Zustand (for state management)
+- Lucide React (for icons)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/merajhossain028/macfolio.git
+cd macfolio
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the development server
+
+```bash
+npm run dev
+```
+
+### 4. Build for production
+
+```bash
+npm run build
+```
+
+### 5. Preview production build
+
+```bash
+npm run preview
+```
+
+## Folder Structure
+
+- `src/components/` — UI components (Navbar, Dock, Home, etc.)
+- `src/windows/` — Windowed app components (Finder, Terminal, Safari, Resume, Contact, etc.)
+- `src/constants/` — App data and configuration
+- `public/files/` — Resume and other downloadable files
+- `public/images/` — App images and icons
+
+## Customization
+
+- Update your profile image in `public/images/meraj-1.jpeg`
+- Edit your resume in `public/files/resume.pdf`
+- Add or modify projects in `src/constants/index.js` under `locations.work.children`
+- Update social links in `src/constants/index.js` under `socials`
+
+## License
+
+MIT
+
+---
