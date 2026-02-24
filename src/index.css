@@ -31,16 +31,23 @@ body {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
+/* ═══════════════════════════════════════════
+   BASE LAYER
+   ═══════════════════════════════════════════ */
 @layer base {
   main {
     @apply w-dvw h-dvh overflow-hidden;
   }
 
+  /* ── Desktop: macOS menu bar ── */
   nav {
     @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
 
+    /* Mobile: transparent iOS status bar */
+    @apply max-sm:bg-transparent max-sm:backdrop-blur-none max-sm:px-5 max-sm:py-3;
+
     div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
+      @apply flex items-center gap-5;
 
       &:last-child {
         @apply max-sm:hidden;
@@ -61,25 +68,75 @@ body {
   }
 }
 
+/* ═══════════════════════════════════════════
+   COMPONENTS LAYER
+   ═══════════════════════════════════════════ */
 @layer components {
   .icon {
     @apply p-1 hover:bg-gray-200 rounded hover:cursor-default;
   }
 
-  #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
+  /* ── iOS Status Bar (mobile only) ── */
+  .ios-status-bar {
+    @apply w-full flex items-center justify-between;
+  }
 
-    .small-screen {
-      @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
+  .ios-time {
+    @apply text-base font-semibold text-white;
+  }
 
-      p {
-        @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
+  .ios-status-icons {
+    @apply flex items-center gap-1.5 text-white;
+  }
+
+  /* ── iOS Back Button (mobile window controls) ── */
+  .ios-back-btn {
+    @apply flex items-center gap-0.5 text-blue-500 font-medium text-base cursor-pointer;
+  }
+
+  /* ── iOS Full-Screen Window ── */
+  .ios-window {
+    @apply fixed inset-0 top-0 z-[1000] overflow-y-auto bg-gray-50;
+  }
+
+  /* ── iOS Home Screen App Grid ── */
+  .ios-home {
+    @apply absolute inset-0 top-0 z-10 flex items-center justify-center;
+  }
+
+  .ios-app-grid {
+    @apply grid grid-cols-4 gap-x-6 gap-y-7 px-8 pt-4;
+  }
+
+  .ios-app-icon {
+    @apply flex flex-col items-center gap-1.5 cursor-pointer;
+
+    .ios-icon-wrapper {
+      @apply w-[60px] h-[60px] rounded-[14px] overflow-hidden bg-white/20 backdrop-blur-sm shadow-lg;
+
+      img {
+        @apply w-full h-full object-cover;
       }
+    }
+
+    p {
+      @apply text-[11px] text-white font-medium text-center truncate w-[70px];
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
   }
 
+  /* ── Welcome ── */
+  #welcome {
+    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none;
+
+    .small-screen {
+      @apply hidden;
+    }
+  }
+
+  /* ── Dock (desktop only, hidden on mobile) ── */
   #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
+    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-[9999] select-none;
 
     .dock-container {
       @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
@@ -98,6 +155,7 @@ body {
     }
   }
 
+  /* ── Window Controls (desktop traffic lights) ── */
   #window-controls {
     @apply flex gap-2;
 
@@ -114,15 +172,28 @@ body {
     }
   }
 
+  /* ── Window Header ── */
   #window-header {
     @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+
+    /* iOS: sticky nav bar with back button left, title centered */
+    @apply max-sm:rounded-none max-sm:sticky max-sm:top-0 max-sm:z-10 max-sm:bg-white/95 max-sm:backdrop-blur-md max-sm:px-3 max-sm:py-3;
+
+    h2 {
+      @apply max-sm:text-gray-900 max-sm:font-semibold max-sm:text-base;
+    }
   }
 
+  /* ── Safari Window ── */
   #safari {
     @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
+    /* Mobile: full width, no positioning */
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
+
     .search {
       @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
+      @apply max-sm:w-full max-sm:text-sm;
 
       input {
         @apply placeholder:text-gray-400;
@@ -131,16 +202,20 @@ body {
 
     .blog {
       @apply bg-white p-10 max-w-3xl mx-auto;
+      @apply max-sm:p-5 max-sm:max-w-full;
 
       h2 {
         @apply text-xl font-bold text-pink-600 mb-10;
+        @apply max-sm:mb-5 max-sm:text-lg;
       }
 
       .blog-post {
         @apply grid grid-cols-12 space-x-5;
+        @apply max-sm:flex max-sm:flex-col max-sm:space-x-0 max-sm:gap-4;
 
         img {
           @apply size-full rounded-md object-cover;
+          @apply max-sm:w-full max-sm:h-40;
         }
 
         .content {
@@ -162,8 +237,10 @@ body {
     }
   }
 
+  /* ── Terminal Window ── */
   #terminal {
     @apply w-xl absolute top-32 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -171,25 +248,32 @@ body {
 
     .techstack {
       @apply text-sm font-roboto p-5;
+      @apply max-sm:p-4 max-sm:text-xs;
 
       .label {
         @apply flex items-center ms-10 mt-7;
+        @apply max-sm:ms-0 max-sm:mt-4;
       }
 
       .content {
         @apply py-5 my-5 border-y border-dashed space-y-1;
+        @apply max-sm:py-3 max-sm:my-3 max-sm:space-y-2;
 
         li {
+          @apply max-sm:flex-wrap max-sm:gap-y-1;
+
           .check {
             @apply text-[#00A154] w-5;
           }
 
           h3 {
             @apply font-semibold text-[#00A154] w-32 ms-5;
+            @apply max-sm:w-auto max-sm:ms-2 max-sm:text-xs;
           }
 
           ul {
             @apply flex items-center gap-3;
+            @apply max-sm:gap-1.5 max-sm:flex-wrap max-sm:text-xs;
           }
         }
       }
@@ -208,8 +292,10 @@ body {
     }
   }
 
+  /* ── Contact Window ── */
   #contact {
     @apply max-w-2xl absolute top-60 left-5/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:max-w-full max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
@@ -221,9 +307,11 @@ body {
 
     ul {
       @apply flex items-center gap-3;
+      @apply max-sm:flex-col max-sm:w-full max-sm:gap-4;
 
       li {
         @apply rounded-lg p-3 w-60 hover:-translate-y-0.5 hover:scale-105 origin-center transition-all duration-300;
+        @apply max-sm:w-full max-sm:rounded-xl;
 
         a {
           @apply space-y-5;
@@ -236,17 +324,23 @@ body {
     }
   }
 
+  /* ── Photos Window ── */
   #photos {
     @apply max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:max-w-full max-sm:w-full max-sm:static max-sm:translate-y-0 max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     .sidebar {
       @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
+      @apply max-sm:w-full max-sm:flex-row max-sm:border-r-0 max-sm:border-b max-sm:p-3 max-sm:overflow-x-auto;
 
       h2 {
         @apply text-xs font-medium text-gray-400 mb-1;
+        @apply max-sm:hidden;
       }
 
       ul {
+        @apply max-sm:flex max-sm:gap-2 max-sm:flex-nowrap;
+
         li {
           @apply flex space-y-1 items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
 
@@ -259,17 +353,18 @@ body {
           }
 
           p {
-            @apply text-sm font-medium;
+            @apply text-sm font-medium max-sm:whitespace-nowrap;
           }
         }
       }
     }
 
     .gallery {
-      @apply p-5;
+      @apply p-5 max-sm:p-3;
 
       ul {
         @apply grid grid-cols-5 grid-rows-5 gap-2.5;
+        @apply max-sm:grid-cols-2 max-sm:grid-rows-none max-sm:gap-2;
 
         li {
           img {
@@ -278,26 +373,32 @@ body {
 
           &:first-child {
             @apply row-start-1 row-span-3 col-start-1 col-span-3;
+            @apply max-sm:row-auto max-sm:col-auto max-sm:col-span-2;
           }
 
           &:nth-child(2) {
             @apply row-start-1 row-span-3 col-start-4 col-span-2;
+            @apply max-sm:row-auto max-sm:col-auto;
           }
 
           &:nth-child(3) {
             @apply row-start-4 row-span-2 col-start-3 col-span-3;
+            @apply max-sm:row-auto max-sm:col-auto;
           }
 
           &:last-child {
             @apply row-start-4 row-span-2 col-start-1 col-span-2;
+            @apply max-sm:row-auto max-sm:col-auto;
           }
         }
       }
     }
   }
 
+  /* ── Resume Window ── */
   #resume {
     @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none max-sm:overflow-y-auto;
 
     #window-header {
       h2 {
@@ -306,38 +407,33 @@ body {
     }
   }
 
+  /* ── Finder Window ── */
   #finder {
     @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     .sidebar {
       @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
+      @apply max-sm:w-full max-sm:border-r-0 max-sm:border-b max-sm:p-3 max-sm:flex-row max-sm:overflow-x-auto max-sm:space-y-0 max-sm:gap-3;
 
       h3 {
         @apply text-xs font-medium text-gray-400 mb-1;
+        @apply max-sm:hidden;
       }
 
       ul {
         @apply space-y-1;
-
-        .active {
-          @apply bg-blue-100 text-blue-700;
-        }
-
-        .not-active {
-          @apply text-gray-700 hover:bg-gray-200;
-        }
-
-        li {
-          @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
-        }
+        @apply max-sm:flex max-sm:space-y-0 max-sm:gap-2 max-sm:flex-nowrap;
       }
     }
 
     .content {
       @apply flex-1 p-8 bg-white max-w-2xl relative;
+      @apply max-sm:p-5 max-sm:max-w-full max-sm:min-h-[50vh] max-sm:grid max-sm:grid-cols-3 max-sm:gap-5;
 
       li {
         @apply absolute flex items-center flex-col gap-3;
+        @apply max-sm:static;
 
         img {
           @apply object-contain object-center size-16 relative group-hover:scale-105;
@@ -345,21 +441,26 @@ body {
 
         p {
           @apply text-sm text-center font-medium w-40;
+          @apply max-sm:w-full max-sm:text-xs;
         }
       }
     }
   }
 
+  /* ── Text File Window ── */
   #txtfile {
     @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
     }
   }
 
+  /* ── Image File Window ── */
   #imgfile {
     @apply w-xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply max-sm:w-full max-sm:static max-sm:rounded-none max-sm:shadow-none max-sm:drop-shadow-none;
 
     #window-header {
       p {
@@ -376,6 +477,7 @@ body {
     }
   }
 
+  /* ── Home (Desktop: draggable folders) ── */
   #home {
     @apply relative z-0 max-sm:hidden;
 

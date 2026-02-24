@@ -1,6 +1,7 @@
 import { WindowControls } from "#components";
 import { locations } from "#constants";
 import WindowWrapper from "#hoc/WindowWrapper";
+import useIsMobile from "#hooks/useIsMobile";
 import useLocationStore from "#store/location";
 import useWindowStore from "#store/window";
 import clsx from "clsx";
@@ -9,6 +10,7 @@ import { Search } from "lucide-react";
 const Finder = () => {
   const { openWindow } = useWindowStore();
   const { activeLocation, setActiveLocation } = useLocationStore();
+  const isMobile = useIsMobile();
 
   const openItem = (item) => {
     if (item.fileType === "pdf") return openWindow("resume");
@@ -40,10 +42,11 @@ const Finder = () => {
     <>
       <div id="window-header">
         <WindowControls target="finder" />
+        <h2 className="sm:hidden font-bold text-sm text-center flex-1 text-gray-800">{activeLocation.name}</h2>
         <Search className="icon" />
       </div>
 
-      <div className="bg-white flex h-full">
+      <div className="bg-white flex h-full max-sm:flex-col">
         <div className="sidebar">
           <div>
             <h3>Favorites</h3>
@@ -59,7 +62,7 @@ const Finder = () => {
           {activeLocation.children.map((item) => (
             <li
               key={item.id}
-              className={item.position}
+              className={isMobile ? "" : item.position}
               onClick={() => openItem(item)}
             >
               <img src={item.icon} alt={item.name} />

@@ -18,14 +18,14 @@ const Safari = () => {
       <div id="window-header">
         <WindowControls target="safari" />
 
-        <PanelLeft className="ml-10 icon" />
+        <PanelLeft className="ml-10 icon max-sm:hidden" />
 
-        <div className="flex items-center gap-1 ml-5">
+        <div className="flex items-center gap-1 ml-5 max-sm:hidden">
           <ChevronLeft className="icon" />
           <ChevronRight className="icon" />
         </div>
 
-        <div className="flex-1 flex-center gap-3">
+        <div className="flex-1 flex-center gap-3 max-sm:hidden">
           <ShieldHalf className="icon" />
 
           <div className="search">
@@ -38,7 +38,9 @@ const Safari = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-5">
+        <h2 className="sm:hidden font-bold text-sm text-center flex-1 text-gray-800">Articles</h2>
+
+        <div className="flex items-center gap-5 max-sm:hidden">
           <Share className="icon" />
           <Plus className="icon" />
           <Copy className="icon" />

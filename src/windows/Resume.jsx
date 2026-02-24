@@ -1,5 +1,6 @@
 import { WindowControls } from "#components/index.js";
 import WindowWrapper from "#hoc/WindowWrapper";
+import useIsMobile from "#hooks/useIsMobile";
 import { Download, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -15,6 +16,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 const Resume = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const isMobile = useIsMobile();
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -67,7 +69,7 @@ const Resume = () => {
       </div>
 
       <Document file="files/resume.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} renderTextLayer renderAnnotationLayer />
+        <Page pageNumber={pageNumber} width={isMobile ? window.innerWidth : undefined} renderTextLayer renderAnnotationLayer />
       </Document>
     </>
   );

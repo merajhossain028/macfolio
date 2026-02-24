@@ -1,15 +1,18 @@
 import { dockApps } from "#constants";
+import useIsMobile from "#hooks/useIsMobile";
+import useWindowStore from "#store/window";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 import { Tooltip } from "react-tooltip";
-import useWindowStore from "#store/window";
 
 const Dock = () => {
   const { openWindow, closeWindow, windows } = useWindowStore();
   const dockRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useGSAP(() => {
+    if (isMobile) return;
     const dock = dockRef.current;
     if (!dock) return;
 
@@ -52,7 +55,7 @@ const Dock = () => {
       dock.removeEventListener("mousemove", handleMouseMove);
       dock.removeEventListener("mouseleave", resetIcons);
     };
-  }, []);
+  }, [isMobile]);
 
   const toggleApp = (app) => {
     if (!app.canOpen) return;
@@ -98,7 +101,7 @@ const Dock = () => {
           </div>
         ))}
 
-        <Tooltip id="dock-tooltip" place="top" className="tooltip" />
+        {!isMobile && <Tooltip id="dock-tooltip" place="top" className="tooltip" />}
       </div>
     </section>
   );

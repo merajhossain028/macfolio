@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import useIsMobile from "#hooks/useIsMobile";
 
 const FONT_WEIGHTS = {
   subtitle: { min: 100, max: 400, default: 100 },
@@ -60,8 +61,10 @@ const setupTextHover = (container, type) => {
 const Welcome = () => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useGSAP(() => {
+    if (isMobile) return;
     const titleCleanuup = setupTextHover(titleRef.current, "title");
     const subtitleCleanup = setupTextHover(subtitleRef.current, "subtitle");
 
@@ -69,10 +72,10 @@ const Welcome = () => {
       titleCleanuup();
       subtitleCleanup();
     };
-  }, []);
+  }, [isMobile]);
 
   return (
-    <section id="welcome">
+    <section id="welcome" className="max-sm:hidden">
       <p ref={subtitleRef}>
         {renderText(
           "Hi, I am a software developer specializing in building exceptional digitalexperiences.",
@@ -83,10 +86,6 @@ const Welcome = () => {
       <h1 ref={titleRef} className="mt-7">
         {renderText("Welcome", "text-9xl italic font-georama")}
       </h1>
-
-      <div className="small-screen">
-        <p>This Portfolio is designed for desktop & tablet screens only</p>
-      </div>
     </section>
   );
 };
